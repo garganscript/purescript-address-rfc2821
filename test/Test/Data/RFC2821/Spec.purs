@@ -2,7 +2,7 @@ module Test.Data.RFC2821.Spec where
 
 import Data.Either (Either(..), isLeft, isRight)
 import Data.RFC2821 as RFC2821
-import Debug (spy)
+-- import Debug (spy)
 import Prelude
 import Test.Spec (Spec, describe, it)
 import Test.Spec.Assertions (shouldEqual)

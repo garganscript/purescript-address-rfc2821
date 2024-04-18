@@ -37,8 +37,9 @@ package:
     # https://github.com/purescript/registry-dev/blob/master/SPEC.md#33-manifest
     exclude:
       - "test/graphs/**/*"
-      # The place where the Registry will fetch the source from.
-      # This is optional since you might want to release the code without
-      # publishing to the Registry, which is what this is needed for.
-      #location:
-      #  url: https://gitlab.iscpif.fr/gargantext/purescript-address-rfc2821.git
+    # The place where the Registry will fetch the source from.
+    # This is optional since you might want to release the code without
+    # publishing to the Registry, which is what this is needed for.
+    location:
+      githubOwner: "garganscript"
+      githubRepo: "purescript-address-rfc2821"

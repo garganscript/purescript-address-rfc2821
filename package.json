@@ -3,6 +3,6 @@
   "devDependencies": {
     "purescript": "0.15.15",
     "purs": "^0.3.0",
-    "spago": "next"
+    "spago": "0.93.29"
   }
 }
