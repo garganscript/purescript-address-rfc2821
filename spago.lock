@@ -3,7 +3,8 @@ workspace:
     address-rfc2821:
       path: ./
       dependencies:
-        - ffi-simple
+        - either
+        - ffi-simple: ">=0.5.1 <0.6.0"
         - prelude: ">=6.0.1 <7.0.0"
       test_dependencies:
         - debug

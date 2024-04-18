@@ -6,7 +6,8 @@ workspace:
 package:
   name: address-rfc2821
   dependencies:
-    - ffi-simple
+    - either: ">=6.1.0 <7.0.0"
+    - ffi-simple: ">=0.5.1 <0.6.0"
     - prelude: ">=6.0.1 <7.0.0"
   test:
     main: Test.Main
@@ -39,5 +40,5 @@ package:
       # The place where the Registry will fetch the source from.
       # This is optional since you might want to release the code without
       # publishing to the Registry, which is what this is needed for.
-    #location:
-    #  url: https://gitlab.iscpif.fr/gargantext/purescript-address-rfc2821.git
+      #location:
+      #  url: https://gitlab.iscpif.fr/gargantext/purescript-address-rfc2821.git
