@@ -1,0 +1,8 @@
+{
+  "dependencies": { "address-rfc2821": "^2.1.2" },
+  "devDependencies": {
+    "purescript": "0.15.15",
+    "purs": "^0.3.0",
+    "spago": "next"
+  }
+}

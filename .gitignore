@@ -1,0 +1,5 @@
+/bun.lockb
+/generated-docs/
+/node_modules/
+/output/
+/.spago/
