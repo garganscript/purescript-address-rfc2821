@@ -14,19 +14,20 @@ module Data.RFC2821.Internal
 where
 
 import Data.Either (Either(..))
+import Effect.Exception (Error)
 import FFI.Simple ((..), (...))
 import Prelude
 
   
 foreign import data Address :: Type
 
-foreign import makeAddressImpl :: forall a b. (String -> Either String a)
+foreign import makeAddressImpl :: forall a b. (Error -> Either Error a)
                                -> (Address -> Either b Address)
                                -> String
-                               -> Either String Address
+                               -> Either Error Address
 
 -- | Attempt to parse given string as an email adddress
-makeAddress :: String -> Either String Address
+makeAddress :: String -> Either Error Address
 makeAddress email = makeAddressImpl Left Right email
 
 

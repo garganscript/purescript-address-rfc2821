@@ -1,44 +1,54 @@
 module Test.Data.RFC2821.Spec where
 
-import Data.Either (Either(..), isLeft, isRight)
+import Data.Either (Either(..))
 import Data.RFC2821 as RFC2821
 -- import Debug (spy)
+import Effect.Exception as Exception
 import Prelude
 import Test.Spec (Spec, describe, it)
-import Test.Spec.Assertions (shouldEqual)
+import Test.Spec.Assertions (fail, shouldEqual)
 
 
 spec :: Spec Unit
 spec =
   describe "RFC2821" do
     it "works for simple email" do
-      let address = RFC2821.makeAddress "admin@localhost.localdomain"
-      let original = (\a -> RFC2821.original a) <$> address
-      let host = (\a -> RFC2821.host a) <$> address
-      let user = (\a -> RFC2821.user a) <$> address
-      original `shouldEqual` (Right "admin@localhost.localdomain")
-      host `shouldEqual` (Right "localhost.localdomain")
-      user `shouldEqual` (Right "admin")
+      let eAddress = RFC2821.makeAddress "admin@localhost.localdomain"
+      case eAddress of
+        Left e -> fail $ "Address parsing returned an error: " <> Exception.message e
+        Right address -> do
+          RFC2821.original address `shouldEqual` "admin@localhost.localdomain"
+          RFC2821.host address `shouldEqual` "localhost.localdomain"
+          RFC2821.user address `shouldEqual` "admin"
 
     it "works for incorrect email" do
-      let address = RFC2821.makeAddress "admin"
-      -- shouldSatisfy requires a Show instance for the underlying type
-      isLeft address `shouldEqual` true
+      let eAddress = RFC2821.makeAddress "admin"
+      case eAddress of
+        Left _e -> pure unit
+        Right _a -> fail $ "It is incorrect for address to parse here!"
     
     it "shouldn't parse email with symbols surrounding it" $ do
-      let address = RFC2821.makeAddress "'admin@localhost.localdomain'"
-      isLeft address `shouldEqual` true
+      let eAddress = RFC2821.makeAddress "'admin@localhost.localdomain'"
+      case eAddress of
+        Left _e -> pure unit
+        Right _a -> fail $ "It is incorrect for address to parse here!"
 
     it "parses email with <>" $ do
-      let address = RFC2821.makeAddress "<admin@localhost.localdomain>"
-      isRight address `shouldEqual` true
+      let eAddress = RFC2821.makeAddress "<admin@localhost.localdomain>"
+      case eAddress of
+        Left e -> fail $ "Address parsing returned an error: " <> Exception.message e
+        Right _a -> pure unit
 
     it "reformatting address as string works" $ do
-      let address = RFC2821.makeAddress "<admin@localhost.localdomain>"
-      let addressStr = (\a -> RFC2821.address a) <$> address
-      addressStr `shouldEqual` (Right "admin@localhost.localdomain")
+      let eAddress = RFC2821.makeAddress "<admin@localhost.localdomain>"
+      case eAddress of
+        Left e -> fail $ "Address parsing returned an error: " <> Exception.message e
+        Right address -> do
+          RFC2821.address address `shouldEqual` "admin@localhost.localdomain"
 
     it "reformatting address as envelope works" $ do
-      let address = RFC2821.makeAddress "admin@localhost.localdomain"
-      let envelopeStr = (\a -> RFC2821.toString a) <$> address
-      envelopeStr `shouldEqual` (Right "<admin@localhost.localdomain>")
+      let eAddress = RFC2821.makeAddress "admin@localhost.localdomain"
+      case eAddress of
+        Left e -> fail $ "Address parsing returned an error: " <> Exception.message e
+        Right address -> do
+          RFC2821.toString address `shouldEqual` "<admin@localhost.localdomain>"
